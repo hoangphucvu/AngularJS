@@ -3,10 +3,10 @@
 angular.module('myContacts.contacts', ['ngRoute','firebase'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/contacts', {
-    templateUrl: 'contacts/contacts.html',
-    controller: 'ContactsCtrl'
-  });
+	$routeProvider.when('/contacts', {
+		templateUrl: 'contacts/contacts.html',
+		controller: 'ContactsCtrl'
+	});
 }])
 
 .controller('ContactsCtrl', ['$scope','$firebaseArray',function($scope,$firebaseArray) {
@@ -20,9 +20,26 @@ angular.module('myContacts.contacts', ['ngRoute','firebase'])
 		$scope.addFormShow=true;
 	}
 
+	$scope.showEditForm=function(contact){
+		$scope.editFormShow=true;
+
+		$scope.id			    = contact.$id;
+		$scope.name 			= contact.name;
+		$scope.email 			= contact.email;
+		$scope.company 			= contact.company;
+		$scope.work_phone 		= contact.phones[0].work;
+		$scope.home_phone 		= contact.phones[0].home;
+		$scope.mobile_phone 	= contact.phones[0].mobile;
+		$scope.street_address 	= contact.address[0].street_address;
+		$scope.city 			= contact.address[0].city;
+		$scope.state 			= contact.address[0].state;
+		$scope.zipcode 			= contact.address[0].zipcode;
+	}
+
 	//show add form via addFormShow variable and ng-hide directive
 	$scope.hide=function(){
 		$scope.addFormShow=false;
+		$scope.contactShow=false;
 	}
 
 	$scope.addFormSubmit=function(){
@@ -45,20 +62,20 @@ angular.module('myContacts.contacts', ['ngRoute','firebase'])
 			company:company,
 			phones:
 			[
-				{
-					mobile:mobile_phone,
-					home:home_phone,
-					work:work_phone
-				}
+			{
+				mobile:mobile_phone,
+				home:home_phone,
+				work:work_phone
+			}
 			],
 			address:
 			[
-				{
-					street_address:street_address,
-					city:city,
-					state:state,
-					zip_code:zipcode
-				}
+			{
+				street_address:street_address,
+				city:city,
+				state:state,
+				zip_code:zipcode
+			}
 			]
 		}).then(function(ref){
 			var id=ref.key();
@@ -74,6 +91,34 @@ angular.module('myContacts.contacts', ['ngRoute','firebase'])
 			$scope.msg='Contact Added';
 		});
 	}
+
+	$scope.editFormSubmit=function(){
+		//get contact id
+		var id=$scope.id;
+		//get specific record from id
+		var record=$scope.contacts.$getRecord(id);
+		record.name 						= $scope.name;
+		record.email 						= $scope.email;
+		record.company 						= $scope.company;
+		record.phones[0].work 				= $scope.work_phone;
+		record.phones[0].home 				= $scope.home_phone;
+		record.phones[0].mobile 			= $scope.mobile_phone;
+		record.address[0].street_address 	= $scope.street_address;
+		record.address[0].city 				= $scope.city;
+		record.address[0].state 			= $scope.state;
+		record.address[0].zipcode 			= $scope.zipcode;
+
+		//save contact
+		$scope.contacts.$save(record).then(function(ref){
+			console.log(ref.key);
+		});
+
+		clearFields();
+		//hide form
+		$scope.editFormShow=false;
+		$scope.msg='Contact Update';
+	}
+
 	// Clear $scope Fields
 	function clearFields(){
 		console.log('Clearing All Fields...');
@@ -88,5 +133,26 @@ angular.module('myContacts.contacts', ['ngRoute','firebase'])
 		$scope.city = '';
 		$scope.state = '';
 		$scope.zipcode = '';
+	}
+
+	$scope.showContact=function(contact){
+		$scope.name = contact.name;
+		$scope.email 			= contact.email;
+		$scope.company 			= contact.company;
+		$scope.work_phone 		= contact.phones[0].work;
+		$scope.home_phone 		= contact.phones[0].home;
+		$scope.mobile_phone 	= contact.phones[0].mobile;
+		$scope.street_address 	= contact.address[0].street_address;
+		$scope.city 			= contact.address[0].city;
+		$scope.state 			= contact.address[0].state;
+		$scope.zipcode 			= contact.address[0].zipcode;
+
+		//show contact form
+		$scope.contactShow=true;
+	}
+
+	$scope.removeContact=function(contact){
+		$scope.contacts.$remove(contact);
+		$scope.msg='Contact Delete';
 	}
 }]);
