@@ -43,6 +43,15 @@ angular.module('ngSocial.facebook', ['ngRoute','ngFacebook'])
 		});
 	}
 	
+	//post status
+	$scope.postStatus=function($scope){
+		var postValue=this.myPost;
+		$facebook.api("/me/feed","post",{message:postValue}).then(function(response){
+			refresh();
+			$scope.myPost='';
+		});
+	}
+
 	function refresh(){
 		$facebook.api("/me").then(function(response){
 			$scope.welcomeMsg="Welcome " + response.name;
