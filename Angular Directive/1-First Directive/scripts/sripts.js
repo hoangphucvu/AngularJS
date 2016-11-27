@@ -2,7 +2,7 @@
  * @Author: Ngo Hung Phuc
  * @Date:   2016-11-27 15:36:00
  * @Last Modified by:   Ngo Hung Phuc
- * @Last Modified time: 2016-11-27 15:56:23
+ * @Last Modified time: 2016-11-27 16:28:59
  */
 /**
  * app Module
@@ -15,14 +15,28 @@
  */
 angular.module('app', []);
 
-angular.module('app', []).controller('mainCtrl', function($scope) {
-
+angular.module('app').controller('mainCtrl', function($scope) {
+    $scope.user = {
+        name: 'Luke Skywalker',
+        address: {
+            street: 'PO Box 123',
+            city: 'Secret Rebel Base',
+            planet: 'Yavin 4'
+        },
+        friends: [
+            'Han',
+            'Leia',
+            'Chewbacca'
+        ]
+    };
+    console.log($scope.user.name);
 });
 
 
-angular.module('app', []).directive('userInfoCard', function() {
+angular.module('app').directive('userInfoCard', function() {
     return {
-        template: "User Info Card",
-        restrict: "E"
+        restrict: 'E',
+        template: 'Name: {{ user.name }}'
+
     };
 });
