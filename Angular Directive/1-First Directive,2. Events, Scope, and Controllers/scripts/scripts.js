@@ -42,9 +42,34 @@ angular.module('app').directive('userInfoCard', function () {
             user: '='
         },
         controller: function ($scope) {
+            $scope.collapsed = false;
             $scope.knightMe = function (user) {
                 user.rank = "knight";
+            };
+            $scope.collapse = function () {
+                //set to it's opposite value of currently is
+                $scope.collapsed = !$scope.collapsed;
             };
         }
     };
 });
+
+angular.module('app').directive('address', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'address.html',
+        scope:true,
+        controller: function ($scope) {
+            $scope.collapsed = false;
+            $scope.collapseAddress = function () {
+                //set to it's opposite value of currently is
+                $scope.collapsed = true;
+            };
+            $scope.expandAddress = function () {
+                //set to it's opposite value of currently is
+                $scope.collapsed = false;
+            };
+        }
+    };
+});
+

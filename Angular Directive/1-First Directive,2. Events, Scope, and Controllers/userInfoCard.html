@@ -1,11 +1,7 @@
 <div class="panel panel-primary">
-    <div class="panel-heading">Name: {{ user.name }}</div>
-    <div class="panel-body">
-        <div ng-show='!!user.address'>Address:<br/>
-            {{user.address.street}} <br/>
-            {{user.address.city}}<br/>
-            {{user.address.planet}}
-        </div>
+    <div class="panel-heading" ng-click="collapse()">Name: {{ user.name }}</div>
+    <div class="panel-body" ng-hide="collapsed">
+       <address></address>
         <div>Friends:
             <div>
                 <ul>
