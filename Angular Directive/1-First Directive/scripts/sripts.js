@@ -2,7 +2,7 @@
  * @Author: Ngo Hung Phuc
  * @Date:   2016-11-27 15:36:00
  * @Last Modified by:   Ngo Hung Phuc
- * @Last Modified time: 2016-11-27 16:28:59
+ * @Last Modified time: 2016-11-27 16:35:27
  */
 /**
  * app Module
@@ -29,14 +29,13 @@ angular.module('app').controller('mainCtrl', function($scope) {
             'Chewbacca'
         ]
     };
-    console.log($scope.user.name);
 });
 
 
 angular.module('app').directive('userInfoCard', function() {
     return {
         restrict: 'E',
-        template: 'Name: {{ user.name }}'
+        templateUrl: 'userInfoCard.html'
 
     };
 });
