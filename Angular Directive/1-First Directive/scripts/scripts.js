@@ -16,7 +16,7 @@
 angular.module('app', []);
 
 angular.module('app').controller('mainCtrl', function ($scope) {
-    $scope.user = {
+    $scope.user1 = {
         name: 'Luke Skywalker',
         address: {
             street: 'PO Box 123',
@@ -37,6 +37,10 @@ angular.module('app').directive('userInfoCard', function () {
     return {
         restrict: 'E',
         templateUrl: 'userInfoCard.html',
+        //scope: true,//internal scope
+        scope: {
+            user: '='
+        },
         controller: function ($scope) {
             $scope.knightMe = function (user) {
                 user.rank = "knight";
