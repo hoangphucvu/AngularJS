@@ -15,7 +15,7 @@
  */
 angular.module('app', []);
 
-angular.module('app').controller('mainCtrl', function($scope) {
+angular.module('app').controller('mainCtrl', function ($scope) {
     $scope.user = {
         name: 'Luke Skywalker',
         address: {
@@ -29,13 +29,18 @@ angular.module('app').controller('mainCtrl', function($scope) {
             'Chewbacca'
         ]
     };
+
 });
 
 
-angular.module('app').directive('userInfoCard', function() {
+angular.module('app').directive('userInfoCard', function () {
     return {
         restrict: 'E',
-        templateUrl: 'userInfoCard.html'
-
+        templateUrl: 'userInfoCard.html',
+        controller: function ($scope) {
+            $scope.knightMe = function (user) {
+                user.rank = "knight";
+            };
+        }
     };
 });
