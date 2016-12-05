@@ -1,8 +1,8 @@
 /*
  * @Author: Ngo Hung Phuc
  * @Date:   2016-11-27 15:36:00
- * @Last Modified by:   Ngo Hung Phuc
- * @Last Modified time: 2016-11-27 16:35:27
+ * @Last Modified by:   hoangphucvu
+ * @Last Modified time: 2016-12-05 10:54:23
  */
 /**
  * app Module
@@ -15,7 +15,7 @@
  */
 angular.module('app', []);
 
-angular.module('app').controller('mainCtrl', function ($scope) {
+angular.module('app').controller('mainCtrl', function($scope) {
     $scope.user1 = {
         name: 'Luke Skywalker',
         address: {
@@ -33,20 +33,23 @@ angular.module('app').controller('mainCtrl', function ($scope) {
 });
 
 
-angular.module('app').directive('userInfoCard', function () {
+angular.module('app').directive('userInfoCard', function() {
     return {
         restrict: 'E',
         templateUrl: 'userInfoCard.html',
         //scope: true,//internal scope
+        //@ rename attribute
+        //=person customize for html attribute tag
         scope: {
-            user: '='
+            user: '=person',
+            initialCollapsed: '@collapsed'
         },
-        controller: function ($scope) {
-            $scope.collapsed = false;
-            $scope.knightMe = function (user) {
+        controller: function($scope) {
+            $scope.collapsed = ($scope.initialCollapsed === 'true');
+            $scope.knightMe = function(user) {
                 user.rank = "knight";
             };
-            $scope.collapse = function () {
+            $scope.collapse = function() {
                 //set to it's opposite value of currently is
                 $scope.collapsed = !$scope.collapsed;
             };
@@ -54,22 +57,21 @@ angular.module('app').directive('userInfoCard', function () {
     };
 });
 
-angular.module('app').directive('address', function () {
+angular.module('app').directive('address', function() {
     return {
         restrict: 'E',
         templateUrl: 'address.html',
-        scope:true,
-        controller: function ($scope) {
+        scope: true,
+        controller: function($scope) {
             $scope.collapsed = false;
-            $scope.collapseAddress = function () {
+            $scope.collapseAddress = function() {
                 //set to it's opposite value of currently is
                 $scope.collapsed = true;
             };
-            $scope.expandAddress = function () {
+            $scope.expandAddress = function() {
                 //set to it's opposite value of currently is
                 $scope.collapsed = false;
             };
         }
     };
 });
-
