@@ -80,7 +80,8 @@ angular.module('app').directive('removeFriend', function () {
                 $scope.removing = false;
             };
             $scope.confirmRemove = function () {
-                $scope.notifyParent();
+                //{friend:'Han'} override function params
+                $scope.notifyParent({friend:'Han'});
             };
         }
     }
