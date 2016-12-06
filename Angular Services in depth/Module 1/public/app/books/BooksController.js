@@ -4,10 +4,11 @@
         .controller('BooksController', BooksController);
 
 
-    function BooksController(books) {
+    function BooksController(books,badgeService) {
 
         var vm = this;
         vm.appName = books.appName;
+
     }
 
 
